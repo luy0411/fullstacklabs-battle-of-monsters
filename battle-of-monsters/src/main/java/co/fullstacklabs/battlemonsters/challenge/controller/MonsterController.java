@@ -58,8 +58,7 @@ public class MonsterController {
     }
     
     @PostMapping("/import")
-    public void importCsv(@RequestParam("file") MultipartFile file, 
-            RedirectAttributes redirectAttributes) {
+    public void importCsv(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         try{
             monsterService.importFromInputStream(file.getInputStream());
         } catch (IOException ex) {

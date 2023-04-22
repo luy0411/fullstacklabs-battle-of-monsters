@@ -33,8 +33,9 @@ public class BattleControllerTest {
 
     @Test
     void shouldFetchAllBattles() throws Exception {
-        this.mockMvc.perform(get(BATTLE_PATH)).andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id", Is.is(1)));
+        this.mockMvc.perform(get(BATTLE_PATH))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$[0].id", Is.is(1)));
     }
     
     @Test

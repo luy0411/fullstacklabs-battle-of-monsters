@@ -6,7 +6,9 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import co.fullstacklabs.battlemonsters.challenge.exceptions.UnprocessableEntityException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +43,12 @@ public class MonsterServiceImpl implements MonsterService {
     public MonsterDTO create(MonsterDTO monsterDTO) {
         Monster monster = modelMapper.map(monsterDTO, Monster.class);
         monster = monsterRepository.save(monster);
-        return modelMapper.map(monster, MonsterDTO.class);
+
+        if (!Optional.of(monster).isPresent())
+            throw new UnprocessableEntityException("Monster could not be saved");
+
+        MonsterDTO map = modelMapper.map(monster, MonsterDTO.class);
+        return map;
     }
 
     private Monster findMonsterById(int id) {
@@ -92,7 +99,7 @@ public class MonsterServiceImpl implements MonsterService {
             parser.parse(inputReader);
             List<MonsterDTO> monsters = rowProcessor.getBeans();            
             monsters.forEach(m -> create(m));
-        } catch (IOException ex) {
+        } catch (Throwable ex) {
             throw new UnprocessableFileException(ex.getMessage());
         }
     }

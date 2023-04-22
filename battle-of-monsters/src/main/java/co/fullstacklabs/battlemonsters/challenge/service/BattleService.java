@@ -3,6 +3,8 @@ package co.fullstacklabs.battlemonsters.challenge.service;
 import java.util.List;
 
 import co.fullstacklabs.battlemonsters.challenge.dto.BattleDTO;
+import co.fullstacklabs.battlemonsters.challenge.dto.MonsterDTO;
+import co.fullstacklabs.battlemonsters.challenge.model.Monster;
 
 /**
  * @author FullStack Labs
@@ -13,5 +15,6 @@ public interface BattleService {
     
     List<BattleDTO> getAll();
 
-
+    BattleDTO create(MonsterDTO monsterA,
+                     MonsterDTO monsterB);
 }
